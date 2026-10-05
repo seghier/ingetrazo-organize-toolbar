@@ -4,17 +4,19 @@
 [![IngeTrazo Compatible](https://img.shields.io/badge/IngeTrazo-v0.4%2B-orange.svg)](https://github.com/ingelibre/ingetrazo)
 [![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)](https://github.com/seghier/ingetrazo-organize-toolbar/releases)
 
-A dedicated, high-productivity **Organize** toolbar and **Extensions** submenu for [IngeTrazo](https://github.com/ingelibre/ingetrazo).
+A dedicated, high-productivity **Organize** toolbar, **Styles** toolbar, and **Extensions** submenu for [IngeTrazo](https://github.com/ingelibre/ingetrazo).
 
-Provides quick one-click buttons for hiding, unhiding, reversing face normals, and grouping geometry — mirroring familiar SketchUp workflows with native IngeTrazo styling.
+Provides quick one-click buttons for organizing geometry (hiding, unhiding, reversing faces, grouping) and switching viewport display styles (Default, Architectural, Shaded, Hidden Line, Monochrome, Wireframe, X-Ray) — mirroring familiar SketchUp workflows with native IngeTrazo styling.
 
 <div align="center">
-  <img src="assets/preview.png" width="700" alt="Organize Toolbar Preview"/>
+  <img src="assets/preview.png" width="750" alt="Organize and Styles Toolbars Preview"/>
 </div>
 
 ---
 
 ## ✨ Features & Actions
+
+### 1. Organize Toolbar
 
 | Icon | Tool | Shortcut | Description |
 | :---: | :--- | :---: | :--- |
@@ -24,6 +26,18 @@ Provides quick one-click buttons for hiding, unhiding, reversing face normals, a
 | <img src="assets/icon_reverse_face.png" width="32" alt="Reverse Faces"/> | **Reverse Faces** | — | Flips the front and back orientation of selected faces. |
 | <img src="assets/icon_group.png" width="32" alt="Make Group"/> | **Make Group** | `Ctrl+G` | Wraps selected geometry into an isolated group. |
 | <img src="assets/icon_ungroup.png" width="32" alt="Explode Group"/> | **Explode Group** | `Ctrl+Shift+G` | Dissolves selected groups back into loose geometry. |
+
+### 2. Styles Toolbar
+
+| Icon | Style | Shortcut | Description |
+| :---: | :--- | :---: | :--- |
+| <img src="assets/icon_style_default.png" width="32" alt="Default"/> | **Default** | — | Faces with materials and textures, under the sky. |
+| <img src="assets/icon_style_architectural.png" width="32" alt="Architectural"/> | **Architectural** | — | Clean presentation look: textured faces on white background, no sky. |
+| <img src="assets/icon_style_shaded.png" width="32" alt="Shaded"/> | **Shaded** | — | Faces in solid directional shading colors, without textures. |
+| <img src="assets/icon_style_hidden_line.png" width="32" alt="Hidden line"/> | **Hidden line** | — | Clean line drawing: opaque white faces that hide back geometry. |
+| <img src="assets/icon_style_monochrome.png" width="32" alt="Monochrome"/> | **Monochrome** | — | Uniform clay tone; shows front and back colors without materials. |
+| <img src="assets/icon_style_wireframe.png" width="32" alt="Wireframe"/> | **Wireframe** | — | Pure wireframe: only edges are drawn. |
+| <img src="assets/icon_style_xray.png" width="32" alt="X-ray"/> | **X-ray** | `Alt+X` | See-through translucent faces showing internal hidden edges. |
 
 ---
 
