@@ -8,7 +8,9 @@ A dedicated, high-productivity **Organize** toolbar and **Extensions** submenu f
 
 Provides quick one-click buttons for hiding, unhiding, reversing face normals, and grouping geometry — mirroring familiar SketchUp workflows with native IngeTrazo styling.
 
-![Organize Toolbar Preview](assets/preview.png)
+<div align="center">
+  <img src="assets/preview.png" width="700" alt="Organize Toolbar Preview"/>
+</div>
 
 ---
 
@@ -16,12 +18,12 @@ Provides quick one-click buttons for hiding, unhiding, reversing face normals, a
 
 | Icon | Tool | Shortcut | Description |
 | :---: | :--- | :---: | :--- |
-| <img src="assets/preview.png" width="28"/> | **Hide** | `Ctrl+H` | Hides the currently selected objects, faces, or edges. |
-| <img src="assets/preview.png" width="28"/> | **Unhide Last** | — | Restores the most recently hidden batch of entities (faces, edges, or groups) in reverse chronological order. |
-| <img src="assets/preview.png" width="28"/> | **Unhide All** | — | Restores all hidden elements across the entire scene and open groups. |
-| <img src="assets/preview.png" width="28"/> | **Reverse Faces** | — | Flips the front and back orientation of selected faces. |
-| <img src="assets/preview.png" width="28"/> | **Make Group** | `Ctrl+G` | Wraps selected geometry into an isolated group. |
-| <img src="assets/preview.png" width="28"/> | **Explode Group** | `Ctrl+Shift+G` | Dissolves selected groups back into loose geometry. |
+| <img src="assets/icon_hide.png" width="32" alt="Hide"/> | **Hide** | `Ctrl+H` | Hides the currently selected objects, faces, or edges. |
+| <img src="assets/icon_unhide_last.png" width="32" alt="Unhide Last"/> | **Unhide Last** | — | Restores the most recently hidden batch of entities (faces, edges, or groups) in reverse chronological order. |
+| <img src="assets/icon_unhide_all.png" width="32" alt="Unhide All"/> | **Unhide All** | — | Restores all hidden elements across the entire scene and open groups. |
+| <img src="assets/icon_reverse_face.png" width="32" alt="Reverse Faces"/> | **Reverse Faces** | — | Flips the front and back orientation of selected faces. |
+| <img src="assets/icon_group.png" width="32" alt="Make Group"/> | **Make Group** | `Ctrl+G` | Wraps selected geometry into an isolated group. |
+| <img src="assets/icon_ungroup.png" width="32" alt="Explode Group"/> | **Explode Group** | `Ctrl+Shift+G` | Dissolves selected groups back into loose geometry. |
 
 ---
 
