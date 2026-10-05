@@ -72,8 +72,8 @@ def _ink() -> QColor:
     return QColor(236, 239, 241)
 
 
-def _rpen(color: QColor, width: float) -> QPen:
-    pen = QPen(color, width)
+def _rpen(color: QColor, width: float, style: Qt.PenStyle = Qt.SolidLine) -> QPen:
+    pen = QPen(color, width, style)
     pen.setCapStyle(Qt.RoundCap)
     pen.setJoinStyle(Qt.RoundJoin)
     return pen
@@ -347,6 +347,46 @@ def _draw_style_xray(p: QPainter, ink: QColor, acc: QColor) -> None:
     p.restore()
 
 
+def _draw_axes(p: QPainter, ink: QColor, acc: QColor) -> None:
+    p.save()
+    o = QPointF(19, 28)
+    # Negative dotted axes
+    p.setPen(_rpen(QColor(120, 130, 145, 140), 1.6, Qt.DotLine))
+    p.drawLine(o, QPointF(19, 42))   # -Z
+    p.drawLine(o, QPointF(7, 21))    # -X
+    p.drawLine(o, QPointF(7, 35))    # -Y
+
+    # Z Axis (Blue / Cyan) - Vertical
+    c_z = QColor(60, 145, 255)
+    p.setPen(_rpen(c_z, 2.8))
+    p.drawLine(o, QPointF(19, 8))
+    p.setPen(Qt.NoPen)
+    p.setBrush(c_z)
+    p.drawPolygon(QPolygonF([QPointF(19, 5), QPointF(16, 11), QPointF(22, 11)]))
+
+    # X Axis (Red / Coral) - Front-Left
+    c_x = QColor(245, 65, 75)
+    p.setPen(_rpen(c_x, 2.8))
+    p.drawLine(o, QPointF(35, 38))
+    p.setBrush(c_x)
+    p.drawPolygon(QPolygonF([QPointF(38, 40), QPointF(32, 36), QPointF(35, 32)]))
+
+    # Y Axis (Green / Lime) - Front-Right
+    c_y = QColor(45, 200, 105)
+    p.setPen(_rpen(c_y, 2.8))
+    p.drawLine(o, QPointF(40, 20))
+    p.setBrush(c_y)
+    p.drawPolygon(QPolygonF([QPointF(43, 18), QPointF(36, 18), QPointF(38, 24)]))
+
+    # Origin sphere
+    p.setPen(Qt.NoPen)
+    p.setBrush(acc)
+    p.drawEllipse(o, 3.2, 3.2)
+    p.setBrush(ink)
+    p.drawEllipse(o, 1.6, 1.6)
+    p.restore()
+
+
 _ICON_DISPATCH = {
     "hide": _draw_hide,
     "unhide_last": _draw_unhide_last,
@@ -354,6 +394,7 @@ _ICON_DISPATCH = {
     "reverse_face": _draw_reverse_face,
     "group": _draw_group,
     "ungroup": _draw_ungroup,
+    "axes": _draw_axes,
     "style_default": _draw_style_default,
     "style_architectural": _draw_style_architectural,
     "style_shaded": _draw_style_shaded,
@@ -488,6 +529,22 @@ def _safe_call(win, attr_name: str) -> None:
         fn()
 
 
+def _toggle_axes(win, visible: bool) -> None:
+    """Toggle XYZ drawing axes visibility in the 3D viewport."""
+    try:
+        import views.viewport as vv
+        vv._SHOW_AXES = bool(visible)
+        vp = getattr(win, "viewport", None)
+        if vp is not None:
+            vp.update()
+        sb = win.statusBar() if hasattr(win, "statusBar") else None
+        if sb:
+            msg = _tr("Axes visible.") if visible else _tr("Axes hidden.")
+            sb.showMessage(msg, 2000)
+    except Exception as e:
+        log.warning("Could not toggle axes: %s", e)
+
+
 def _apply_style_by_name(win, name: str) -> None:
     """Activate a display style preset by name, updating viewport and menus."""
     try:
@@ -512,6 +569,23 @@ def _apply_style_by_name(win, name: str) -> None:
 def setup(app) -> None:
     """Entry point called by IngeTrazo when loading extensions."""
     win = app.window
+
+    # Intercept viewport axes rendering so Axes button can toggle them live
+    try:
+        import views.viewport as vv
+        if not hasattr(vv, "_ORIG_AXES_VERTICES"):
+            vv._ORIG_AXES_VERTICES = vv._axes_vertices
+            vv._SHOW_AXES = True
+
+            def _patched_axes_vertices(spacing: float, pos_len: float = 1.0e5):
+                if not getattr(vv, "_SHOW_AXES", True):
+                    from array import array
+                    return array("f"), {"x": (0, 0), "y": (0, 0), "z": (0, 0)}
+                return vv._ORIG_AXES_VERTICES(spacing, pos_len)
+
+            vv._axes_vertices = _patched_axes_vertices
+    except Exception as e:
+        log.warning("Could not patch axes vertices: %s", e)
 
     # Also register our icon renderers with views.icons._DRAW if present
     try:
@@ -603,6 +677,18 @@ def setup(app) -> None:
     act_ungrp.triggered.connect(lambda: _safe_call(win, "_on_explode_group"))
     tb.addAction(act_ungrp)
     actions.append((act_ungrp, "ungroup"))
+
+    tb.addSeparator()
+
+    # Toggle Axes
+    act_axes = QAction(_make_icon("axes"), _tr("Axes"), win)
+    act_axes.setToolTip(f"{_tr('Axes')}  ({_tr('Show / Hide Axes')})")
+    act_axes.setStatusTip(_tr("Show or hide the red, green and blue coordinate axes in the viewport."))
+    act_axes.setCheckable(True)
+    act_axes.setChecked(True)
+    act_axes.toggled.connect(lambda on: _toggle_axes(win, on))
+    tb.addAction(act_axes)
+    actions.append((act_axes, "axes"))
 
     tb.show()
 
@@ -708,6 +794,8 @@ def setup(app) -> None:
             ext_menu.addSeparator()
             ext_menu.addAction(act_grp)
             ext_menu.addAction(act_ungrp)
+            ext_menu.addSeparator()
+            ext_menu.addAction(act_axes)
             ext_menu.addSeparator()
             styles_submenu = ext_menu.addMenu(_tr("Styles"))
             for name, _key, _label, _tip, _stip in style_defs:
