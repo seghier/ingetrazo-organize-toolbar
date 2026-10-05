@@ -7,7 +7,7 @@ license = "GPL-3.0-or-later"
 repository = "https://github.com/seghier/ingetrazo-organize-toolbar"
 
 download = "https://github.com/seghier/ingetrazo-organize-toolbar/releases/download/v1.0/organize_toolbar.zip"
-sha256 = "1fd05c89d14a4593bae34c9b0bb8df9f85459b30bc94b4ed1c1397344acb652e"
+sha256 = "029f91d81ba54ba1bb6bacb5b5d7f89f602c2a9d1e5ff775fce155dd0c5f5b85"
 
 ingetrazo = "0.5.7"
 tags = ["productivity", "drawing"]
