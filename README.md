@@ -9,7 +9,7 @@ A dedicated, high-productivity **Organize** toolbar and **Extensions** submenu f
 Provides quick one-click buttons for organizing geometry (hiding, unhiding, reversing faces, and grouping) — mirroring familiar SketchUp workflows with native IngeTrazo styling.
 
 <div align="center">
-  <img src="assets/preview.png" width="750" alt="Organize Toolbar Preview"/>
+  <img src="assets/organize_toolbar_preview.png" width="536" alt="Organize Toolbar Preview"/>
 </div>
 
 ---
