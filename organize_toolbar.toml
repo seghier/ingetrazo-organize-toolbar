@@ -6,8 +6,8 @@ author_url = "https://github.com/seghier"
 license = "GPL-3.0-or-later"
 repository = "https://github.com/seghier/ingetrazo-organize-toolbar"
 
-download = "https://raw.githubusercontent.com/seghier/ingetrazo-organize-toolbar/v1.0/organize_toolbar.py"
-sha256 = "5a66e05a31456874d451b2f774aae662d89ed5a3ef1bd8a7259472a3f28f3527"
+download = "https://github.com/seghier/ingetrazo-organize-toolbar/releases/download/v1.0/organize_toolbar.zip"
+sha256 = "1fd05c89d14a4593bae34c9b0bb8df9f85459b30bc94b4ed1c1397344acb652e"
 
 ingetrazo = "0.5.7"
 tags = ["productivity", "drawing"]
