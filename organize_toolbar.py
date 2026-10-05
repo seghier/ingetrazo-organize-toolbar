@@ -1,23 +1,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Marco Sumari Tellez and IngeTrazo contributors.
-"""Organize & Styles Toolbar plugin for IngeTrazo.
+"""Organize Toolbar plugin for IngeTrazo.
 
-Self-contained plugin providing dedicated toolbars and Extensions submenu for:
-- Organize toolbar:
-  - Hide selection (Ctrl+H)
-  - Unhide Last
-  - Unhide All
-  - Reverse Faces
-  - Make Group (Ctrl+G)
-  - Explode Group (Ctrl+Shift+G)
-- Styles toolbar:
-  - Default (Shaded with Textures)
-  - Architectural (Clean white presentation)
-  - Shaded (Face colors without textures)
-  - Hidden line (Opaque white faces)
-  - Monochrome (Two-tone front/back)
-  - Wireframe (Edges only)
-  - X-ray (Translucent see-through)
+Self-contained plugin providing a dedicated toolbar and Extensions submenu for:
+- Hide selection (Ctrl+H)
+- Unhide Last
+- Unhide All
+- Reverse Faces
+- Make Group (Ctrl+G)
+- Explode Group (Ctrl+Shift+G)
 """
 from __future__ import annotations
 
@@ -198,195 +189,6 @@ def _draw_ungroup(p: QPainter, ink: QColor, acc: QColor) -> None:
     p.restore()
 
 
-# ---- Isometric Style Cube Geometry -------------------------------------------
-_CUBE_TOP = QPolygonF([QPointF(24, 7), QPointF(39, 15), QPointF(24, 23), QPointF(9, 15)])
-_CUBE_LEFT = QPolygonF([QPointF(9, 15), QPointF(24, 23), QPointF(24, 39), QPointF(9, 31)])
-_CUBE_RIGHT = QPolygonF([QPointF(24, 23), QPointF(39, 15), QPointF(39, 31), QPointF(24, 39)])
-
-
-def _draw_style_default(p: QPainter, ink: QColor, acc: QColor) -> None:
-    p.save()
-    p.setPen(Qt.NoPen)
-    p.setBrush(QColor(225, 230, 235))
-    p.drawPolygon(_CUBE_TOP)
-    p.setBrush(QColor(170, 185, 200))
-    p.drawPolygon(_CUBE_LEFT)
-    p.setBrush(QColor(120, 140, 160))
-    p.drawPolygon(_CUBE_RIGHT)
-    p.setPen(_rpen(QColor(50, 65, 80, 180), 1.3))
-    p.drawLine(QPointF(9, 20), QPointF(24, 28))
-    p.drawLine(QPointF(9, 25.5), QPointF(24, 33.5))
-    p.drawLine(QPointF(14, 17.8), QPointF(14, 22.8))
-    p.drawLine(QPointF(19, 25.5), QPointF(19, 30.8))
-    p.drawLine(QPointF(14, 28.2), QPointF(14, 33.5))
-    p.setPen(_rpen(QColor(130, 140, 150, 150), 1.2))
-    p.drawLine(QPointF(14, 12.3), QPointF(29, 20.3))
-    p.drawLine(QPointF(19, 9.7), QPointF(34, 17.7))
-    p.setPen(Qt.NoPen)
-    p.setBrush(acc)
-    p.drawRoundedRect(QRectF(30, 24, 6, 6), 1.5, 1.5)
-    p.setPen(_rpen(ink, 2.2))
-    p.setBrush(Qt.NoBrush)
-    p.drawPolygon(_CUBE_TOP)
-    p.drawPolygon(_CUBE_LEFT)
-    p.drawPolygon(_CUBE_RIGHT)
-    p.restore()
-
-
-def _draw_style_architectural(p: QPainter, ink: QColor, acc: QColor) -> None:
-    p.save()
-    p.setPen(Qt.NoPen)
-    p.setBrush(QColor(252, 252, 254))
-    p.drawPolygon(_CUBE_TOP)
-    p.setBrush(QColor(235, 238, 242))
-    p.drawPolygon(_CUBE_LEFT)
-    p.setBrush(QColor(210, 218, 226))
-    p.drawPolygon(_CUBE_RIGHT)
-    p.setPen(_rpen(ink, 2.2))
-    p.setBrush(Qt.NoBrush)
-    p.drawPolygon(_CUBE_TOP)
-    p.drawPolygon(_CUBE_LEFT)
-    p.drawPolygon(_CUBE_RIGHT)
-    p.setPen(_rpen(acc, 2.2))
-    p.drawLine(QPointF(5, 43), QPointF(43, 43))
-    p.drawLine(QPointF(7, 40), QPointF(10, 46))
-    p.drawLine(QPointF(38, 40), QPointF(41, 46))
-    p.restore()
-
-
-def _draw_style_shaded(p: QPainter, ink: QColor, acc: QColor) -> None:
-    p.save()
-    p.setPen(Qt.NoPen)
-    p.setBrush(QColor(215, 230, 250))
-    p.drawPolygon(_CUBE_TOP)
-    p.setBrush(QColor(140, 175, 220))
-    p.drawPolygon(_CUBE_LEFT)
-    p.setBrush(QColor(80, 115, 165))
-    p.drawPolygon(_CUBE_RIGHT)
-    p.setPen(_rpen(ink, 2.2))
-    p.setBrush(Qt.NoBrush)
-    p.drawPolygon(_CUBE_TOP)
-    p.drawPolygon(_CUBE_LEFT)
-    p.drawPolygon(_CUBE_RIGHT)
-    p.restore()
-
-
-def _draw_style_hidden_line(p: QPainter, ink: QColor, acc: QColor) -> None:
-    p.save()
-    p.setPen(Qt.NoPen)
-    p.setBrush(QColor(255, 255, 255))
-    p.drawPolygon(_CUBE_TOP)
-    p.drawPolygon(_CUBE_LEFT)
-    p.drawPolygon(_CUBE_RIGHT)
-    p.setPen(_rpen(ink, 2.4))
-    p.setBrush(Qt.NoBrush)
-    p.drawPolygon(_CUBE_TOP)
-    p.drawPolygon(_CUBE_LEFT)
-    p.drawPolygon(_CUBE_RIGHT)
-    p.restore()
-
-
-def _draw_style_monochrome(p: QPainter, ink: QColor, acc: QColor) -> None:
-    p.save()
-    p.setPen(Qt.NoPen)
-    p.setBrush(QColor(240, 240, 245))
-    p.drawPolygon(_CUBE_TOP)
-    p.drawPolygon(_CUBE_LEFT)
-    p.setBrush(QColor(155, 175, 195))
-    p.drawPolygon(_CUBE_RIGHT)
-    p.setPen(_rpen(acc, 2.0))
-    p.drawLine(QPointF(28, 30), QPointF(35, 25))
-    p.drawLine(QPointF(35, 25), QPointF(31, 24))
-    p.setPen(_rpen(ink, 2.2))
-    p.setBrush(Qt.NoBrush)
-    p.drawPolygon(_CUBE_TOP)
-    p.drawPolygon(_CUBE_LEFT)
-    p.drawPolygon(_CUBE_RIGHT)
-    p.restore()
-
-
-def _draw_style_wireframe(p: QPainter, ink: QColor, acc: QColor) -> None:
-    p.save()
-    p.setBrush(Qt.NoBrush)
-    p.setPen(_rpen(QColor(ink.red(), ink.green(), ink.blue(), 120), 1.8, Qt.DashLine))
-    p.drawLine(QPointF(9, 31), QPointF(24, 23))
-    p.drawLine(QPointF(39, 31), QPointF(24, 23))
-    p.drawLine(QPointF(24, 7), QPointF(24, 23))
-    p.setPen(_rpen(ink, 2.4))
-    hex_pts = QPolygonF([
-        QPointF(24, 7), QPointF(39, 15), QPointF(39, 31),
-        QPointF(24, 39), QPointF(9, 31), QPointF(9, 15)
-    ])
-    p.drawPolygon(hex_pts)
-    p.drawLine(QPointF(24, 23), QPointF(24, 39))
-    p.drawLine(QPointF(24, 23), QPointF(9, 15))
-    p.drawLine(QPointF(24, 23), QPointF(39, 15))
-    p.setPen(Qt.NoPen)
-    p.setBrush(acc)
-    for pt in (QPointF(24, 7), QPointF(39, 15), QPointF(39, 31), QPointF(24, 39), QPointF(9, 31), QPointF(9, 15)):
-        p.drawEllipse(pt, 2.2, 2.2)
-    p.restore()
-
-
-def _draw_style_xray(p: QPainter, ink: QColor, acc: QColor) -> None:
-    p.save()
-    p.setPen(Qt.NoPen)
-    p.setBrush(QColor(90, 170, 245, 75))
-    p.drawPolygon(_CUBE_TOP)
-    p.drawPolygon(_CUBE_LEFT)
-    p.drawPolygon(_CUBE_RIGHT)
-    p.setPen(_rpen(acc, 2.2, Qt.DashLine))
-    p.drawLine(QPointF(9, 31), QPointF(24, 23))
-    p.drawLine(QPointF(39, 31), QPointF(24, 23))
-    p.drawLine(QPointF(24, 7), QPointF(24, 23))
-    p.setPen(_rpen(ink, 2.2))
-    p.setBrush(Qt.NoBrush)
-    p.drawPolygon(_CUBE_TOP)
-    p.drawPolygon(_CUBE_LEFT)
-    p.drawPolygon(_CUBE_RIGHT)
-    p.restore()
-
-
-def _draw_axes(p: QPainter, ink: QColor, acc: QColor) -> None:
-    p.save()
-    o = QPointF(19, 28)
-    # Negative dotted axes
-    p.setPen(_rpen(QColor(120, 130, 145, 140), 1.6, Qt.DotLine))
-    p.drawLine(o, QPointF(19, 42))   # -Z
-    p.drawLine(o, QPointF(7, 21))    # -X
-    p.drawLine(o, QPointF(7, 35))    # -Y
-
-    # Z Axis (Blue / Cyan) - Vertical
-    c_z = QColor(60, 145, 255)
-    p.setPen(_rpen(c_z, 2.8))
-    p.drawLine(o, QPointF(19, 8))
-    p.setPen(Qt.NoPen)
-    p.setBrush(c_z)
-    p.drawPolygon(QPolygonF([QPointF(19, 5), QPointF(16, 11), QPointF(22, 11)]))
-
-    # X Axis (Red / Coral) - Front-Left
-    c_x = QColor(245, 65, 75)
-    p.setPen(_rpen(c_x, 2.8))
-    p.drawLine(o, QPointF(35, 38))
-    p.setBrush(c_x)
-    p.drawPolygon(QPolygonF([QPointF(38, 40), QPointF(32, 36), QPointF(35, 32)]))
-
-    # Y Axis (Green / Lime) - Front-Right
-    c_y = QColor(45, 200, 105)
-    p.setPen(_rpen(c_y, 2.8))
-    p.drawLine(o, QPointF(40, 20))
-    p.setBrush(c_y)
-    p.drawPolygon(QPolygonF([QPointF(43, 18), QPointF(36, 18), QPointF(38, 24)]))
-
-    # Origin sphere
-    p.setPen(Qt.NoPen)
-    p.setBrush(acc)
-    p.drawEllipse(o, 3.2, 3.2)
-    p.setBrush(ink)
-    p.drawEllipse(o, 1.6, 1.6)
-    p.restore()
-
-
 _ICON_DISPATCH = {
     "hide": _draw_hide,
     "unhide_last": _draw_unhide_last,
@@ -394,14 +196,6 @@ _ICON_DISPATCH = {
     "reverse_face": _draw_reverse_face,
     "group": _draw_group,
     "ungroup": _draw_ungroup,
-    "axes": _draw_axes,
-    "style_default": _draw_style_default,
-    "style_architectural": _draw_style_architectural,
-    "style_shaded": _draw_style_shaded,
-    "style_hidden_line": _draw_style_hidden_line,
-    "style_monochrome": _draw_style_monochrome,
-    "style_wireframe": _draw_style_wireframe,
-    "style_xray": _draw_style_xray,
 }
 
 
@@ -529,63 +323,11 @@ def _safe_call(win, attr_name: str) -> None:
         fn()
 
 
-def _toggle_axes(win, visible: bool) -> None:
-    """Toggle XYZ drawing axes visibility in the 3D viewport."""
-    try:
-        import views.viewport as vv
-        vv._SHOW_AXES = bool(visible)
-        vp = getattr(win, "viewport", None)
-        if vp is not None:
-            vp.update()
-        sb = win.statusBar() if hasattr(win, "statusBar") else None
-        if sb:
-            msg = _tr("Axes visible.") if visible else _tr("Axes hidden.")
-            sb.showMessage(msg, 2000)
-    except Exception as e:
-        log.warning("Could not toggle axes: %s", e)
-
-
-def _apply_style_by_name(win, name: str) -> None:
-    """Activate a display style preset by name, updating viewport and menus."""
-    try:
-        from core.style import style_by_name
-        preset = style_by_name(name)
-        if preset is None:
-            return
-        if hasattr(win, "_apply_display_style") and callable(win._apply_display_style):
-            win._apply_display_style(preset)
-        else:
-            scene = getattr(win, "scene", None) or getattr(getattr(win, "viewport", None), "scene", None)
-            if scene is not None:
-                scene.display_style = preset.copy()
-            if hasattr(win, "viewport"):
-                win.viewport.update()
-    except Exception as e:
-        log.warning("Could not apply style %s: %s", name, e)
-
-
 # ---- Plugin Setup -----------------------------------------------------------
 
 def setup(app) -> None:
     """Entry point called by IngeTrazo when loading extensions."""
     win = app.window
-
-    # Intercept viewport axes rendering so Axes button can toggle them live
-    try:
-        import views.viewport as vv
-        if not hasattr(vv, "_ORIG_AXES_VERTICES"):
-            vv._ORIG_AXES_VERTICES = vv._axes_vertices
-            vv._SHOW_AXES = True
-
-            def _patched_axes_vertices(spacing: float, pos_len: float = 1.0e5):
-                if not getattr(vv, "_SHOW_AXES", True):
-                    from array import array
-                    return array("f"), {"x": (0, 0), "y": (0, 0), "z": (0, 0)}
-                return vv._ORIG_AXES_VERTICES(spacing, pos_len)
-
-            vv._axes_vertices = _patched_axes_vertices
-    except Exception as e:
-        log.warning("Could not patch axes vertices: %s", e)
 
     # Also register our icon renderers with views.icons._DRAW if present
     try:
@@ -678,112 +420,14 @@ def setup(app) -> None:
     tb.addAction(act_ungrp)
     actions.append((act_ungrp, "ungroup"))
 
-    tb.addSeparator()
-
-    # Toggle Axes
-    act_axes = QAction(_make_icon("axes"), _tr("Axes"), win)
-    act_axes.setToolTip(f"{_tr('Axes')}  ({_tr('Show / Hide Axes')})")
-    act_axes.setStatusTip(_tr("Show or hide the red, green and blue coordinate axes in the viewport."))
-    act_axes.setCheckable(True)
-    act_axes.setChecked(True)
-    act_axes.toggled.connect(lambda on: _toggle_axes(win, on))
-    tb.addAction(act_axes)
-    actions.append((act_axes, "axes"))
-
     tb.show()
-
-    # 2. Create or retrieve the Styles toolbar
-    if hasattr(win, "_new_toolbar") and callable(win._new_toolbar):
-        styles_tb = win._new_toolbar(_tr("Styles"), "styles_toolbar")
-    else:
-        styles_tb = QToolBar(_tr("Styles"), win)
-        styles_tb.setObjectName("styles_toolbar")
-        styles_tb.setMovable(True)
-        styles_tb.setFloatable(True)
-        try:
-            from views.icons import toolbar_icon_px
-            px = toolbar_icon_px()
-        except Exception:
-            px = 24
-        styles_tb.setIconSize(QSize(px, px))
-        styles_tb.setToolButtonStyle(Qt.ToolButtonIconOnly)
-        win.addToolBar(Qt.TopToolBarArea, styles_tb)
-
-    if hasattr(win, "toolbars") and isinstance(win.toolbars, dict):
-        win.toolbars["styles_toolbar"] = styles_tb
-
-    from PySide6.QtGui import QActionGroup
-    style_group = QActionGroup(win)
-    try:
-        style_group.setExclusionPolicy(QActionGroup.ExclusionPolicy.ExclusiveOptional)
-    except Exception:
-        style_group.setExclusive(True)
-
-    style_actions: dict[str, QAction] = {}
-    style_defs = [
-        ("Default", "style_default", _tr("Default"), _tr("Default (Shaded with Textures)"),
-         _tr("Faces with their materials and textures, under the sky.")),
-        ("Architectural", "style_architectural", _tr("Architectural"), _tr("Architectural"),
-         _tr("Faces with their materials on a plain white background, without the sky.")),
-        ("Shaded", "style_shaded", _tr("Shaded"), _tr("Shaded"),
-         _tr("Faces in their colours, without textures.")),
-        ("Hidden line", "style_hidden_line", _tr("Hidden Line"), _tr("Hidden line"),
-         _tr("White faces that hide what lies behind them — a clean line drawing.")),
-        ("Monochrome", "style_monochrome", _tr("Monochrome"), _tr("Monochrome"),
-         _tr("Every face in the front or back colour, without materials.")),
-        ("Wireframe", "style_wireframe", _tr("Wireframe"), _tr("Wireframe"),
-         _tr("Only the edges: the faces are not drawn.")),
-        ("X-ray", "style_xray", _tr("X-ray"), _tr("X-ray  (Alt+X)"),
-         _tr("See-through faces, so the edges behind them show.")),
-    ]
-
-    for name, key, label, tip, status_tip in style_defs:
-        act = QAction(_make_icon(key), label, win)
-        act.setToolTip(tip)
-        act.setStatusTip(status_tip)
-        act.setCheckable(True)
-        style_group.addAction(act)
-        act.triggered.connect(lambda _c=False, n=name: _apply_style_by_name(win, n))
-        styles_tb.addAction(act)
-        style_actions[name] = act
-        actions.append((act, key))
-
-    def _sync_style_toolbar_buttons() -> None:
-        try:
-            vp = getattr(win, "viewport", None)
-            scene = getattr(vp, "scene", None)
-            cur_style = getattr(scene, "display_style", None)
-            cur_name = getattr(cur_style, "name", None)
-            for n, a in style_actions.items():
-                a.blockSignals(True)
-                a.setChecked(n == cur_name)
-                a.blockSignals(False)
-        except Exception:
-            pass
-
-    orig_sync = getattr(win, "_sync_style_menu", None)
-    if callable(orig_sync):
-        def _hooked_sync():
-            orig_sync()
-            _sync_style_toolbar_buttons()
-        win._sync_style_menu = _hooked_sync
-
-    vp = getattr(win, "viewport", None)
-    if hasattr(vp, "sceneVersionChanged"):
-        try:
-            vp.sceneVersionChanged.connect(lambda _v: _sync_style_toolbar_buttons())
-        except Exception:
-            pass
-
-    _sync_style_toolbar_buttons()
-    styles_tb.show()
 
     # Register all actions for theme refresh if supported
     if hasattr(win, "_icon_actions") and isinstance(win._icon_actions, list):
         for act, key in actions:
             win._icon_actions.append((act, key))
 
-    # 3. Add an "Organize" submenu to Extensions menu
+    # Add an "Organize" submenu to Extensions menu
     try:
         ext_menu = app.add_menu(_tr("Organize"))
         if ext_menu is not None:
@@ -794,11 +438,5 @@ def setup(app) -> None:
             ext_menu.addSeparator()
             ext_menu.addAction(act_grp)
             ext_menu.addAction(act_ungrp)
-            ext_menu.addSeparator()
-            ext_menu.addAction(act_axes)
-            ext_menu.addSeparator()
-            styles_submenu = ext_menu.addMenu(_tr("Styles"))
-            for name, _key, _label, _tip, _stip in style_defs:
-                styles_submenu.addAction(style_actions[name])
     except Exception as e:
         log.warning("Could not add Organize submenu to Extensions: %s", e)
