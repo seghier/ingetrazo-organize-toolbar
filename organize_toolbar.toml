@@ -1,13 +1,13 @@
 id = "organize_toolbar"
-version = "1.0"
+version = "1.2"
 author = "seghier"
 author_url = "https://github.com/seghier"
 
 license = "GPL-3.0-or-later"
 repository = "https://github.com/seghier/ingetrazo-organize-toolbar"
 
-download = "https://github.com/seghier/ingetrazo-organize-toolbar/releases/download/v1.0/organize_toolbar.zip"
-sha256 = "2b25dc8f1f7116389a3eb62639855d38b781527d4da51121410119c4b7ece15d"
+download = "https://github.com/seghier/ingetrazo-organize-toolbar/releases/download/v1.2/organize_toolbar.zip"
+sha256 = "788fa173cc39e2f6e42c63531ced07b23af6f7627575044992127c51cfab20f2"
 
 ingetrazo = "0.5.7"
 tags = ["productivity", "drawing"]

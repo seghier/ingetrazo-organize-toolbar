@@ -2,7 +2,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![IngeTrazo Compatible](https://img.shields.io/badge/IngeTrazo-v0.4%2B-orange.svg)](https://github.com/ingelibre/ingetrazo)
-[![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)](https://github.com/seghier/ingetrazo-organize-toolbar/releases)
+[![Version](https://img.shields.io/badge/Version-1.2.0-green.svg)](https://github.com/seghier/ingetrazo-organize-toolbar/releases)
 
 A dedicated, high-productivity **Organize** toolbar and **Extensions** submenu for [IngeTrazo](https://github.com/ingelibre/ingetrazo).
 
